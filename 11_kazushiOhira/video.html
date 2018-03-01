@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+<!--LINK -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/sample.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<!-- MAP -->
+  </script>
+  
+ <!-- Jquery -->
+  <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />   
+  <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+  <!-- create.js -->
+  <title>video</title>
+  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+
+</head>
+
+<body id="index2">
+    <header id="header">
+      <nav>
+          <ul id="head-li">
+            <li><img id="logo" src="img/logo.png"></li>
+            <li>HOME</li>
+            <li>ABOUT</li>
+            <li>PRODUCT</li>
+            <li>CONTACT</li>
+          </ul>
+        </nav>
+    </header>
+
+    <article>
+      <div class="nico-unit">
+        <video id="video2" src="img/douga.mp4" autoplay loop muted></video>
+        <p>速い〜！！</p>
+        <p>まじ憧れる</p>
+        <p>こんなん脚パンパンなるやんｗｗｗ</p>
+        <p>ペーター・サガン様ああああああああ</p>
+        <p>かっこいい</p>
+        <p>wwwww</p>
+        <p>手足長い。。いいなあ。。</p>
+      </div>
+      <canvas id="myCanvas"></canvas>
+    </article>
+    <input type="text" id="insert" placeholder="コメントを入力" value="" maxlength="10">
+    <button id="postComment" disabled>送信</button>
+
+    <!-- 左エリア -->
+      <!-- タイトルエリア -->
+      <div id="vid-col">
+        <div id="left">
+          <div id="vid-title"><div>ツールドフランス</div></div>
+          <div id="vid-detail">詳細</div>
+          <div id="vid-icon"><img src="">kazushi-oohira</div>
+
+          <ul>
+            <li>img1</li>
+            <li>img2</li>
+            <li>img3</li>
+            <li>img4</li>
+          <div id="desc">
+            <p>ツール・ド・フランス<br>
+              
+            </p>
+          </div>
+          <div id="com">コメント</div>
+
+
+        </div>
+    </div>
+
+    <!-- 右関連動画エリア(まだ実装しない) -->
+            
+
+<!-- Javascript ーーーーーーーーーーーーーーーーーーーーーーーーーー-->
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+  var mx;
+  var my;
+    window.addEventListener("load", init);
+
+// initが一番親メソッド
+function init() {
+  // クリック用のcanvasキャッチ
+  var st = document.getElementById("myCanvas");
+  st.addEventListener('click',handleclick);
+  // Stageオブジェクトを作成します(座標取得)
+  var stage = new createjs.Stage("myCanvas");
+
+  function handleclick(e){
+    mx = stage.mouseX;
+    my = stage.mouseY;
+    console.log(mx);
+    console.log(my);
+
+    }
+    
+    // クリックして座標保存
+
+    // Stageの描画を更新します
+    stage.update();
+
+
+
+
+  // - createJSーーーーーーーーーーーーーーーーーーーーー
+  $("#index").fadeIn(2000);
+
+
+
+  //--------------------initialise---------------------------------//
+    //firebase接続
+    var config = {
+        apiKey: "AIzaSyAjIoaaTTh9gqhtzNLyMwE6gvXfOwPrizY",
+        authDomain: "my-project-1511663205940.firebaseapp.com",
+        databaseURL: "https://my-project-1511663205940.firebaseio.com",
+        projectId: "my-project-1511663205940",
+        storageBucket: "",
+        messagingSenderId: "700467533911"
+    };
+    firebase.initializeApp(config);
+    // 受信準備
+    var ref = firebase.database().ref();
+
+    //-------------------------firebase処理 -------------------------------------//  
+    // MSGデータ受信したらp追加して右から左へ流す
+    ref.on('child_added',(data) => {
+        var d = data.val();
+        
+        $('.nico-unit').append(`<p>${d.text}</p>`);
+        // latestで最新の要素＝今回追加分を取得
+        var latest = $('.nico-unit p:last');
+        // 最後の要素の下に配置
+        var t = Math.floor(Math.random() * latest.parent().height()) - latest.height();
+        if (t < 80) t = 80;
+        // 最新のCSSを更新
+        latest.css({
+            'top'  : t,
+            'left' : latest.parent().width()
+        });
+        setInterval(function(){
+            //0.5秒後に流す
+            flow(latest);
+        }, 500);
+    });
+
+
+    // 動画のDiv
+    var c = $('.nico-unit p');
+    
+    //c.で取得したリストをeachでループする
+    c.each(function(){
+        // 高さを取っている
+        var t = Math.floor(Math.random() * $(this).parent().height()) - $(this).height();
+        // マイナスになったら０を入れる
+        if (t < 80) t = 80;
+        // 取得した要素のCSSを変更
+        $(this).css({
+            // 高さはランダムで出した数字
+            'top'  : t,
+            // 親の一番左に位置させる
+            'left' : $(this).parent().width()
+        });
+    });
+
+    // Widthの位置を引いている。pxで
+    setInterval(function(){
+        // indexはc要素の内容
+        c.each(function(index){
+            // delay数秒後にイベント発生0.8秒
+            // widthを左にanimate3秒かけてlinerで
+            $(this).delay(800 * index).animate({
+                // プロパティ
+                'left': '-' + $(this).width() + 'px'
+                // 滑らかに右寄せ
+            }, 3000, 'linear',
+
+            // アニメーション完了時にもう一回ループ→いらないかも。
+            function(){
+
+                var t = Math.floor(Math.random() * $(this).parent().height()) - $(this).height();
+                if (t < 80) t = 80;
+                
+                $(this).css({
+                    'top'  : t,
+                    'left' : $(this).parent().width()
+                });
+
+            });
+
+        });
+
+    },500);
+
+    // コメントボタン押下→firebaseDBに格納して最新の要素として追加→左から右に流す
+    $('#postComment').on('click', function(){
+      // firebaseDBに格納
+        ref.push({
+          text: $("#insert").val()
+        })
+
+      // コメントボタン押下→クリック座標に図形とテキスト追加
+      // 四角形を作成します
+      var shape = new createjs.Shape();
+      shape.graphics.beginFill("navy"); // 赤色で描画するように設定
+      shape.graphics.drawRect(mx - 20 , my - 10, 40, 20); // 長方形を描画
+      stage.addChild(shape); // 表示リストに追加
+
+      // テキストの作成
+      var text = $("#insert").val();
+      var t = new createjs.Text(text, "10px serif", "white");
+      t.textAlign = "center";
+      t.textBaseline = "middle";
+      stage.addChild(t);
+        t.x = mx;
+        t.y = my;
+        stage.update();
+
+      // 5秒で消える
+      setTimeout(() => {
+        stage.removeChild(t);
+        stage.removeChild(shape);
+        stage.update();
+      }, 5000);
+      
+      // →できればクリックで動画停止→コメント押下で再会
+      // function comment(e) {
+      // }
+        console.log(ref);
+        // 値は初期化
+        $('#insert').val('');
+    });
+
+
+    // 最新の要素を流す
+    function flow(o) {
+        o.delay(800 * (c.length - 1)).animate({
+            'left' : '-' + o.width() + 'px'
+        }, 3000, 'linear', function(){
+            var t = Math.floor(Math.random() * o.parent().height()) - o.height();
+            if (t < 80) t = 80;
+            o.css({
+                'top'  : t,
+                'left' : o.parent().width()
+            });
+        });
+    }
+    // フォームでボタン押下した時、全角半角英数環境依存文字OK
+    $('#insert').on('keydown keyup keypress change', function(){
+        if ($(this).val().length > 0) {
+            // 文字が入力されていない時活性
+            $('#postComment').removeAttr('disabled');
+        } else {
+            // それ以外は非活性
+            $('#postComment').attr('disabled', 'disabled');
+        }
+    });
+}
+</script>
+
+</body>
+
+</html>

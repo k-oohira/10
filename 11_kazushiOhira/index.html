@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>login.html</title>
+  <!-- jquery -->
+  <script src="js/jquery-2.1.3.min.js"></script>
+
+  <!-- link -->
+  <link rel="stylesheet" href="css/reset.css">  
+  <link rel="stylesheet" href="css/sample.css">
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+  <!-- jquery-UI -->
+  <link type="text/css" rel="stylesheet"  href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />
+  <script type="text/javascript"  src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+</head>
+
+<body>
+    <header id="header">
+            <nav>
+                <ul id="head-li">
+                    <li><img id="logo" src="img/logo.png"></li>
+                    <li>HOME</li>
+                    <li>ABOUT</li>
+                    <li>PRODUCT</li>
+                    <li>CONTACT</li>
+                </ul>
+                </nav>
+            </header>
+          
+    <div id="video-outer">
+        
+        <div class="top">
+            <input id="btn" class="btn" type="button" value="start" form="">
+            <h1 id="title">Remember Your Memories</h1>
+            <h3 id="title2"><img id="logo-login" src="img/logo.png" alt="">
+                で思い出を記録する</h2>
+        </div>
+        <div class="video-wrap">
+                <video id="video" style="display:none; width:100%; height:100%; opacity:0.6;" src="img/gopro.mp4" autoplay loop muted>
+                </video>
+        </div>
+    
+    </div>
+    
+  
+    <div id="col1">
+        ルート×動画×コメント
+    </div>
+
+    <div id="col2">
+        <img id="col2-image" src="img/mt_road.jpg">
+            
+        </div>
+        <div id="col2-1">
+            <!-- 左にcanvasで書く -->
+        </div>
+        <div id="col2-2">
+                <!-- 右にテキスト -->
+                <div id="col2tit">ルート検索</div>
+                <div id="col2text">どんなアクティビティ、シーン、を入力するとルートが見つかる</div>
+                <!-- awsome アイコン-->
+        </div>                            
+    </div>
+
+    <div id="col3">
+        <div id="col3-image" >
+
+        </div>
+        <div id="col3-1">
+            <!-- 左にテキスト -->
+            <div id="col3tit">美麗な動画で追体験</div>
+            <div id="col3text">ルートに紐付いた動画で冒険を追体験しよう。</div>                
+        </div>
+        <div id="col3-2">
+                <!-- 右にcanvasで書く -->
+                <!-- 動画をはめてもいい -->
+        </div>                            
+    </div>
+
+    <div id="col4">
+        <div id="col4-image">
+
+        </div>
+        <div id="col4-1">
+                <!-- 左に -->
+        </div>
+        <div id="col4-2">
+                <!-- 右にコメント -->
+                <div id="col4tit">美麗な動画で追体験</div>
+                <div id="col4text">ルートに紐付いた動画で冒険を追体験しよう。</div>                                    
+        </div>
+    </div>
+
+    <!-- ポップアップフォトギャラリー -->
+
+    <footer>
+        
+    </footer>
+
+  <script>
+        $("#video").fadeIn(6500,"easeInExpo");
+        $(".top").fadeIn(4000);
+      $("#btn").on("click",function(){
+          window.location.href = 'index.html';
+      });
+  </script>
+  
+</body>
+</html>
